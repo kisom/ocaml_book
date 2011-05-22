@@ -22,7 +22,34 @@
 (*13*) let rec (-) x y = y - x in 1 - 2 - 3 ;; (* illegal: eternal hang, no bounding*)
 (*14*) let (+) x y z = x + y + z in 5 + 6 7 ;; (* illegal: 6 is not a function *)
                                                (* let (+) x y z = x + y + z in (5 + 6) 7 would be *)
-(*15*) let (++) x = x + 1 in ++ x ;; (* illegal: ++x doesn't work
+(*15*) let (++) x = x + 1 in ++ x ;; (* illegal: ++x doesn't work *)
+
+
+(* exercise 3.2
+ * what are the values of the following expressions? *)
+(*1*) let x = 1 in let x = x + 1 in x ;;
+      (* -: int = 2 *)
+(*2*) let x = 1 in
+      let f y = x in
+      let x = 2 in
+      f 0
+      (* -: int = 2 *)
+(*3*) let f x = x - 1 in
+      let f x = f (x - 1) in
+      f 0
+      (* -: int = 0 *)
+(*4*) let y = 2 in
+      let f x = x + y in
+      let f x = let y = 3 in f y in
+      f 5
+      (* -: int = 5 *)
+(*5*) let rec factorial i =
+	if i = 0 then
+	  1
+	else i * factorial (i - 1)
+      in factorial 5
+      (* -: int = 120 *)
+
 
 (* exercise 3.3 *)
 let rec sum = fun m n f ->
@@ -41,3 +68,5 @@ let rec (%%) n m =
       n %% (m - n)
   else
     n
+
+
