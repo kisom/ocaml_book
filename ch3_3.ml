@@ -70,3 +70,20 @@ let rec (%%) n m =
     n
 
 
+(* exercise 3.5 *)
+let rec search = fun f n ->
+  if n <= 0 then -1
+  else
+    if smaller f (n - 1) n = n then n
+    else
+      search f (n - 1)
+
+and smaller = fun f i n ->
+  if i <= 0 then n 
+  else
+    if f i < f n && f i > 0 then i else n
+
+
+(* exercise 3.6 *)
+(* implement the dictionary data type in OCaml. *)
+
