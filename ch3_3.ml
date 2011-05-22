@@ -7,7 +7,22 @@
 (* 3*) let x = 1 and y = x in y ;;  (* illegal: 'and' implies recursive functions *)
 (* 4*) let x = 1 and x = 2 in x ;;  (* illegal: x bound multiple times at same scope *)
 (* 5*) let x = 1 in let x = x in x ;;
-(* 6*) let a' = 1 in a' + 1 ;; (* *)
+(* 6*) let a' = 1 in a' + 1 ;; (* legal: int = 2 *)
+(* 7*) let 'a = 1 in 'a + 1 ;; (* illegal: variable names must start with lcase or underscore *)
+(* 8*) let a'b'c' = 1 in a'b'c' ;; (* legal: int = 1 *)
+(* 9*) let x x = x + 1 in x 2 ;; (* legal: int = 3 *)
+(*10*) let rec x x = x + x in x 2 ;; (* legal: int = 4 *)
+(*11*) let (++) f g x= f (g x) in
+       let f x = x + 1 in
+       let g x = x + 2 in 
+       (f ++ g) 1
+	 (* legal: int = 4, the last parenthesis might screw with your mind a bit but it works
+	    bottom up. *)
+(*12*) let (-) x y = y - x in 1 - 2 - 3 ;; (* legal: int = 2 *)
+(*13*) let rec (-) x y = y - x in 1 - 2 - 3 ;; (* illegal: eternal hang, no bounding*)
+(*14*) let (+) x y z = x + y + z in 5 + 6 7 ;; (* illegal: 6 is not a function *)
+                                               (* let (+) x y z = x + y + z in (5 + 6) 7 would be *)
+(*15*) let (++) x = x + 1 in ++ x ;; (* illegal: ++x doesn't work
 
 (* exercise 3.3 *)
 let rec sum = fun m n f ->
