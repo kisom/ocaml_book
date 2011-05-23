@@ -1,16 +1,15 @@
-# template makefile for ocaml native compiler
-OCAML := ocamlopt
+# template makefile for ocaml bytecode
+OCAML := ocamlc
 OPTS  := -g
 CLEAN_EXTS := *.cmi *.cmx *.cmo
 BINARIES := hellow
 
-
 all: hellow
 
-hellow: hellow.cmx
-	$(OCAML) $(OPTS) -o $@ $?
+hellow: hellow.cmo
+	$(OCAML) $(OPTS) -o $@ -c $?
 
-%.cmx: %.ml
+%.cmo: %.ml
 	$(OCAML) $(OPTS) -o $@ -c $?
 
 clean:
